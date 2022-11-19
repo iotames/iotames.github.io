@@ -42,6 +42,70 @@
         
         
         
+            <section class="list-item">
+                <h1 class="title"><a href="/posts/quick-golang/">Quick Golang</a></h1>
+
+                <div class="tips">
+                    <div class="date">
+                        <time datetime="2022-11-19 16:58:02 &#43;0800 CST">2022/11/19</time>
+                    </div>
+
+                    
+
+                    
+                        <div class="tags">
+                            <span>Tags:</span>
+                            
+                                <a href="/tags/golang">golang</a>
+                            
+                        </div>
+                    
+                </div>
+
+                <div class="summary">简介 🔗 本文旨在为Go语言初学者提供快速入门指南，从环境安装和设置，到项目编译打包，学会Go开发的流程。 Go语言继承C语言的理念，语法类似，奉行简约风格，没有其他面向对象语言的类和继承的概念。 Golang的初步掌握，在于充分理解 指针 和 接口 的概念，并灵活使用。 本教程着重Go项目的整体理解和实践，不重点解说变量和函数使用等语法细节，语法教程资源丰富，请自行在网上扩展学习。
+一份源码，处处编译 🔗JAVA以跨平台著称，号称&quot;一次编译，处处运行&quot;。实际上，每台机器，都必须安装JAVA虚拟机能运行。 所以，从跨平台的表现上看，JAVA对比普通脚本语言并无太大优势。
+Go和C一样，一份源码，在任意操作系统上，直接编译成二进制可执行文件，便可在其他机器上独立运行。（指运行环境和编译环境一致。如: 在win-x64系统上编译，在win-x64系统上运行）
+环境安装 🔗Go安装包下载链接，请以官方显示的不同操作系统平台的Go最新版本链接为准: https://go.dev/dl/
+Linux 🔗下载Go文件压缩包并解压，设置Go环境变量
+# 下载go环境压缩包，链接可自行替换为最新版本 wget -c https://go.dev/dl/go1.19.3.linux-amd64.tar.gz # 解压缩到/usr/local目录 tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz # 添加go可执行文件所在的目录到环境变量。 # 可在系统初始化文件 /etc/profile 的最末行添加代码: export PATH=$PATH:/usr/local/go/bin vim /etc/profile # 手动执行初始化文件，使得环境变量更改生效 source /etc/profile # 验证go是否安装成功。 go version Mac 🔗同Linux
+Windows 🔗下载Go环境安装文件，安装结束后，安装程序自动设置Go环境变量
+下载并安装文件: https://go.dev/dl/go1.19.3.windows-amd64.msi 打开cmd命令窗口验证go命令: go version
+环境设置 🔗查看所有go环境设置项的值: go env
+输入如下命令，更改默认设置项以方便后续开发:
+# 开启GO111MODULE，方便第三方包的导入 go env -w GO111MODULE=on # 使用国内Go模块代理，加速第三方包导入速度 go env -w GOPROXY=https://goproxy.</div>
+            </section>
+        
+            <section class="list-item">
+                <h1 class="title"><a href="/posts/hugo-blog/">使用Hugo创建Github Pages博客</a></h1>
+
+                <div class="tips">
+                    <div class="date">
+                        <time datetime="2022-11-19 10:22:17 &#43;0800 CST">2022/11/19</time>
+                    </div>
+
+                    
+
+                    
+                        <div class="tags">
+                            <span>Tags:</span>
+                            
+                                <a href="/tags/hugo">hugo</a>
+                            
+                                <a href="/tags/golang">golang</a>
+                            
+                        </div>
+                    
+                </div>
+
+                <div class="summary">创建Git仓库 🔗Github上创建仓库，仓库名为 username.github.io, 其中 username 必须为实际GitHub账号的用户名。
+安装hugo 🔗很多主题需要 扩展版 的hugo才能安装。故应安装 扩展版的hugo.
+安装方法有二: 1. 直接下载 Releases 发布包. 2. 通过 go install 命令安装
+下载hugo发布包(文件名含extended): https://github.com/gohugoio/hugo/releases
+Go 安装: go env -w CGO_ENABLED=1, go install --tags extended github.com/gohugoio/hugo@latest
+验证安装:
+hugo version hugo v0.106.0-e08ce30fe4779e7d8a8395d7021314b915648cb4+extended windows/amd64 BuildDate=2022-11-17T18:33:40Z VendorInfo=gohugoio 创建博客 🔗# 1. Create a New Site hugo new site quickstart # 2. Add a Theme cd quickstart git init git submodule add https://github.com/leafee98/hugo-theme-flat themes/hugo-theme-flat echo theme = \&#34;hugo-theme-flat\&#34; &gt;&gt; config.</div>
+            </section>
+        
 
     </div>
     
@@ -70,6 +134,24 @@
             </div>
             <div class="side">
                 
+                    <div class="side-recent">
+    <h2 class="side-title">Recent Posts</h2>
+    <hr />
+
+    <ul>
+        
+            <li>
+                <a href="/posts/quick-golang/">Quick Golang</a>
+            </li>
+        
+            <li>
+                <a href="/posts/hugo-blog/">使用Hugo创建Github Pages博客</a>
+            </li>
+        
+    </ul>
+</div>
+
+                
                 <div class="side-categories">
     <h2>Categories</h2>
     <hr />
@@ -85,6 +167,14 @@
 
     <ul>
         
+            <li>
+                <a href="/tags/golang">golang (2)</a>
+            </li>
+        
+            <li>
+                <a href="/tags/hugo">hugo (1)</a>
+            </li>
+        
     </ul>
 </div>
 
@@ -92,6 +182,14 @@
         </main>
         <footer class="footer">
     <div class="footer-row">
+        
+            
+            
+                <a class="footer-item" href="/posts/index.xml">
+                    Feed of Posts
+                    <i class="icofont-rss"></i>
+                </a>
+            
         
 
         
