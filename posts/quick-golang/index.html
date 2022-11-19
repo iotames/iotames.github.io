@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Quick Golang | 沙滩星空</title>
+        <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,minimum-scale=1">
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/icofont/icofont.min.css" />
+<link rel="stylesheet" href="/css/syntax.css" />
+<link rel="stylesheet" href="/css/style.css" />
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+    </head>
+
+    <body>
+        <header class="header-wrapper">
+    <div class="header">
+        <a class="site-title" href="">沙滩星空</a>
+
+        <ul class="menu">
+            
+        </ul>
+    </div>
+</header>
+
+        <main class="main-wrapper">
+            <div class="main">
+                
+
+<section class="single">
+    <h1 class="title">Quick Golang</h1>
+
+    <div class="tip">
+        <time datetime="2022-11-19 16:58:02 &#43;0800 CST">2022/11/19</time>
+        <span class="split">·</span>
+        <span> 386 words </span>
+        <span class="split">·</span>
+        <span>
+            2 minutes to read
+        </span>
+    </div>
+
+    <div class="taxonomies">
+        
+
+        
+            <div>
+                Tags:
+                
+                    <a href="/tags/golang">golang</a>
+                
+            </div>
+        
+    </div>
+
+    <hr />
+
+    <div class="content">
+        <h2 id="简介">简介 <a href="#%e7%ae%80%e4%bb%8b" class="anchor">🔗</a></h2><ol>
+<li>本文旨在为Go语言初学者提供快速入门指南，从环境安装和设置，到项目编译打包，学会Go开发的流程。</li>
+<li>Go语言继承C语言的理念，语法类似，奉行简约风格，没有其他面向对象语言的类和继承的概念。</li>
+<li>Golang的初步掌握，在于充分理解 <code>指针</code> 和 <code>接口</code> 的概念，并灵活使用。</li>
+</ol>
+<p>本教程着重Go项目的整体理解和实践，<code>不重点解说变量和函数使用等语法细节</code>，语法教程资源丰富，请自行在网上扩展学习。</p>
+<h2 id="一份源码处处编译">一份源码，处处编译 <a href="#%e4%b8%80%e4%bb%bd%e6%ba%90%e7%a0%81%e5%a4%84%e5%a4%84%e7%bc%96%e8%af%91" class="anchor">🔗</a></h2><p>JAVA以跨平台著称，号称&quot;一次编译，处处运行&quot;。实际上，每台机器，都必须安装JAVA虚拟机能运行。
+所以，从跨平台的表现上看，JAVA对比普通脚本语言并无太大优势。</p>
+<p>Go和C一样，一份源码，在任意操作系统上，直接编译成二进制可执行文件，便可在其他机器上独立运行。（指运行环境和编译环境一致。如: 在win-x64系统上编译，在win-x64系统上运行）</p>
+<h2 id="环境安装">环境安装 <a href="#%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85" class="anchor">🔗</a></h2><p>Go安装包下载链接，请以官方显示的不同操作系统平台的Go最新版本链接为准: <a href="https://go.dev/dl/">https://go.dev/dl/</a></p>
+<h3 id="linux">Linux <a href="#linux" class="anchor">🔗</a></h3><p>下载Go文件压缩包并解压，设置Go环境变量</p>
+<pre tabindex="0"><code># 下载go环境压缩包，链接可自行替换为最新版本
+wget -c https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+# 解压缩到/usr/local目录
+tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
+# 添加go可执行文件所在的目录到环境变量。
+# 可在系统初始化文件 /etc/profile 的最末行添加代码: export PATH=$PATH:/usr/local/go/bin
+vim /etc/profile
+# 手动执行初始化文件，使得环境变量更改生效
+source /etc/profile
+# 验证go是否安装成功。
+go version
+</code></pre><h3 id="mac">Mac <a href="#mac" class="anchor">🔗</a></h3><p>同Linux</p>
+<h3 id="windows">Windows <a href="#windows" class="anchor">🔗</a></h3><p>下载Go环境安装文件，安装结束后，安装程序自动设置Go环境变量</p>
+<p>下载并安装文件: <a href="https://go.dev/dl/go1.19.3.windows-amd64.msi">https://go.dev/dl/go1.19.3.windows-amd64.msi</a>
+打开cmd命令窗口验证go命令: <code>go version</code></p>
+<h2 id="环境设置">环境设置 <a href="#%e7%8e%af%e5%a2%83%e8%ae%be%e7%bd%ae" class="anchor">🔗</a></h2><p>查看所有go环境设置项的值: <code>go env</code></p>
+<p>输入如下命令，更改默认设置项以方便后续开发:</p>
+<pre tabindex="0"><code># 开启GO111MODULE，方便第三方包的导入
+go env -w GO111MODULE=on
+# 使用国内Go模块代理，加速第三方包导入速度
+go env -w GOPROXY=https://goproxy.cn,direct
+</code></pre><h2 id="项目创建">项目创建 <a href="#%e9%a1%b9%e7%9b%ae%e5%88%9b%e5%bb%ba" class="anchor">🔗</a></h2><ol>
+<li>
+<p>在新目录初始化本地项目(<code>myproject</code>)，生成 <code>go.mod</code> 文件: <code>go mod init myproject</code></p>
+</li>
+<li>
+<p>新建 <code>main.go</code> 入口文件，通过 <code>import</code> 语法导入包，在 <code>func main()</code> 入口函数中编写代码</p>
+</li>
+<li>
+<p>更新依赖，生成 <code>go.sum</code> 文件: <code>go mod tidy</code></p>
+</li>
+<li>
+<p>调试运行: <code>go run .</code></p>
+</li>
+<li>
+<p>编译成二进制可执行文件(<code>myproject.exe</code>): <code>go build .</code></p>
+</li>
+</ol>
+<p><code>main.go</code> 文件示例（提取百度首页热搜）:</p>
+<p>最新源码: <a href="https://github.com/iotames/miniutils/tree/main/examples/myproject">https://github.com/iotames/miniutils/tree/main/examples/myproject</a></p>
+<pre tabindex="0"><code>package main
+
+import (
+	&#34;fmt&#34;
+	&#34;log&#34;
+
+	&#34;github.com/iotames/miniutils&#34;
+)
+
+func main() {
+	// 构建HTTP请求(默认GET方法)
+	req := miniutils.NewHttpRequest(&#34;https://www.baidu.com&#34;)
+	// 设置HTTP请求头
+	req.SetRequestHeader(&#34;user-agent&#34;, &#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.81 Safari/533.33&#34;)
+	// 执行HTTP请求
+	err := req.Do(nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	body := string(req.BodyBytes)
+        // 提取网页中，以`&lt;span class=&#34;title-content-title&#34;&gt;`字符串开头，`&lt;/span&gt;` 字符串结尾的所有字符串片段。
+	strfind := miniutils.NewStrfind(body).SetRegexpBeginEnd(`&lt;span class=&#34;title-content-title&#34;&gt;`, `&lt;/span&gt;`)
+	hots := strfind.DoFind().GetAll(false)
+	hotsMsg := &#34;百度热搜:\n&#34;
+	for i, v := range hots {
+		hotsMsg += fmt.Sprintf(&#34;[%d]-----&gt;[%s]\n&#34;, i, v)
+	}
+	log.Println(hotsMsg)
+}
+</code></pre><p>运行结果:</p>
+<pre tabindex="0"><code>
+----RequestBegin---GET: https://www.baidu.com -------------------------------------------
+
+User-Agent:  [Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.81 Safari/533.33]
+
+
+----RequestEnd---(200 OK)----------------------
+
+2022/11/18 14:59:21 百度热搜:
+[0]-----&gt;[“两个全球倡议”有何含义]
+[2]-----&gt;[携手应对挑战 加快经济复苏]
+[2]-----&gt;[新华社：一封了之、一放了之要不得]
+[3]-----&gt;[张伯礼：奥密克戎难以彻底消灭]
+[4]-----&gt;[31省份昨日新增本土2276+22853]
+[5]-----&gt;[女子戴隐形10年角膜长满新生血管]
+</code></pre><p>至此，一个简单的 Hello Word 应用程序编写完成, 用于提取百度首页的热搜关键词.
+程序编译成独立的可执行文件: <code>myproject.exe</code>(Linux或Mac系统文件名为<code>myproject</code>).
+请打开命令行窗口执行:</p>
+<ul>
+<li>Windows: <code>myproject.exe</code></li>
+<li>Linux: <code>./myproject</code></li>
+</ul>
+<p>Linux系统若报权限问题，请先赋予文件可执行权限: <code>chmod +x myproject</code></p>
+<h2 id="语法特性">语法特性 <a href="#%e8%af%ad%e6%b3%95%e7%89%b9%e6%80%a7" class="anchor">🔗</a></h2><h3 id="package-包">package 包 <a href="#package-%e5%8c%85" class="anchor">🔗</a></h3><p>Go语言使用包(package)来组织golang工程项目。特点如下:</p>
+<ol>
+<li>一个包一个文件夹，包名通常为<code>小写英文字母</code>，建议和目录名相同。</li>
+<li>包目录下每个go文件首行内容为: <code>package [包名]</code>。如 <code>package main</code>, <code>package model</code>, <code>package service</code>, <code>package webserver</code></li>
+<li>一个包的函数和变量是共享的，可直接调用。但要被其他包调用，函数名或变量的<code>首字母必须大写</code>。</li>
+<li>可编译项目的根目录，必须为main包，且必须存在 <code>func main()</code> 函数作为应用入口。(若项目作为第三方库使用，则无man包和main函数)</li>
+<li><code>包声明</code>: 在go源码<code>文件首行</code>，使用 <code>package</code> 语句。</li>
+<li><code>包导入</code>: 在<code>包声明</code>语句下面，使用 <code>import</code> 语法导入，使用 <code>/</code> 符号连接不同文件夹的包名。</li>
+</ol>
+<ul>
+<li>golang官方包: <code>fmt</code>, <code>runtime</code>, <code>encoding/json</code>, <code>net/http</code>, <code>golang.org/x/net/html</code></li>
+<li>本地包: <code>包导入</code>格式<code>本地项目名/本地包名</code>，如 <code>myproject/model</code>, <code>myproject/webserver/data</code></li>
+<li>第三方包: <code>github.com/iotames/miniutils</code>, <code>xorm.io/xorm</code></li>
+</ul>
+<h3 id="循环语句">循环语句 <a href="#%e5%be%aa%e7%8e%af%e8%af%ad%e5%8f%a5" class="anchor">🔗</a></h3><p><code>Go基础语法</code> 在线练习: <a href="https://go.dev/play/">https://go.dev/play/</a></p>
+<ul>
+<li>for语句</li>
+</ul>
+<pre tabindex="0"><code>result := &#34;&#34;
+for i := &#39;a&#39;; i &lt;= &#39;g&#39;; i++ {
+    result += fmt.Sprintf(&#34;%c&#34;, i)
+}
+fmt.Println(result) // 输出 &#34;abcdefg&#34;
+</code></pre><pre tabindex="0"><code>result := &#34;&#34;
+for i := 0; i &lt;= 5; i++ {
+    result += fmt.Sprintf(&#34;%d&#34;, i)
+}
+fmt.Println(result) // 输出 &#34;012345&#34;
+</code></pre><ul>
+<li>for range 语句</li>
+</ul>
+<pre tabindex="0"><code>mapstr := map[string]string{&#34;a&#34;:&#34;aa11&#34;, &#34;b&#34;:&#34;bb22&#34;}
+result := &#34;&#34;
+for k, v := range mapstr {
+    result += fmt.Sprintf(&#34;%s-&gt;%s&#34;, k, v)
+}
+fmt.Println(result) // 输出 &#34;a-&gt;aa11b-&gt;bb22&#34;
+</code></pre><pre tabindex="0"><code>sliceStr:= []string{&#34;aa11&#34;, &#34;bb22&#34;}
+result := &#34;&#34;
+for i, v := range sliceStr {
+    result += fmt.Sprintf(&#34;%d-&gt;%s&#34;, i, v)
+}
+fmt.Println(result) // 输出 &#34;0-&gt;aa111-&gt;bb22&#34;
+</code></pre><h2 id="教程源码">教程源码 <a href="#%e6%95%99%e7%a8%8b%e6%ba%90%e7%a0%81" class="anchor">🔗</a></h2><p>本教程调用库 <code>miniutils</code>，对日常开发的常见功能进行封装，不依赖其他第三方库，包含 examples 示例源码。</p>
+<p>同步仓库:</p>
+<blockquote>
+<p>Github: <a href="https://github.com/iotames/miniutils">https://github.com/iotames/miniutils</a></p>
+</blockquote>
+<blockquote>
+<p>Gitee: <a href="https://gitee.com/catmes/miniutils">https://gitee.com/catmes/miniutils</a></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>安装go开发环境: <a href="https://go.dev/doc/install">https://go.dev/doc/install</a></p>
+</blockquote>
+
+    </div>
+
+    
+</section>
+
+
+            </div>
+            <div class="side">
+                
+                    <div class="side-recent">
+    <h2 class="side-title">Recent Posts</h2>
+    <hr />
+
+    <ul>
+        
+            <li>
+                <a href="/posts/quick-golang/">Quick Golang</a>
+            </li>
+        
+            <li>
+                <a href="/posts/hugo-blog/">使用Hugo创建Github Pages博客</a>
+            </li>
+        
+    </ul>
+</div>
+
+                
+                <div class="side-categories">
+    <h2>Categories</h2>
+    <hr />
+
+    <ul>
+        
+    </ul>
+</div>
+
+                <div class="side-tags">
+    <h2>Tags</h2>
+    <hr />
+
+    <ul>
+        
+            <li>
+                <a href="/tags/golang">golang (2)</a>
+            </li>
+        
+            <li>
+                <a href="/tags/hugo">hugo (1)</a>
+            </li>
+        
+    </ul>
+</div>
+
+            </div>
+        </main>
+        <footer class="footer">
+    <div class="footer-row">
+        
+            
+            
+                <a class="footer-item" href="/posts/index.xml">
+                    Feed of Posts
+                    <i class="icofont-rss"></i>
+                </a>
+            
+        
+
+        
+            
+            
+        
+    </div>
+
+    
+</footer>
+
+    </body>
+</html>

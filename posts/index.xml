@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on 沙滩星空</title>
+    <link>/posts/</link>
+    <description>Recent content in Posts on 沙滩星空</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 19 Nov 2022 16:58:02 +0800</lastBuildDate><atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Quick Golang</title>
+      <link>/posts/quick-golang/</link>
+      <pubDate>Sat, 19 Nov 2022 16:58:02 +0800</pubDate>
+      
+      <guid>/posts/quick-golang/</guid>
+      <description>&lt;h2 id=&#34;简介&#34;&gt;简介 &lt;a href=&#34;#%e7%ae%80%e4%bb%8b&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;本文旨在为Go语言初学者提供快速入门指南，从环境安装和设置，到项目编译打包，学会Go开发的流程。&lt;/li&gt;
+&lt;li&gt;Go语言继承C语言的理念，语法类似，奉行简约风格，没有其他面向对象语言的类和继承的概念。&lt;/li&gt;
+&lt;li&gt;Golang的初步掌握，在于充分理解 &lt;code&gt;指针&lt;/code&gt; 和 &lt;code&gt;接口&lt;/code&gt; 的概念，并灵活使用。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;本教程着重Go项目的整体理解和实践，&lt;code&gt;不重点解说变量和函数使用等语法细节&lt;/code&gt;，语法教程资源丰富，请自行在网上扩展学习。&lt;/p&gt;
+&lt;h2 id=&#34;一份源码处处编译&#34;&gt;一份源码，处处编译 &lt;a href=&#34;#%e4%b8%80%e4%bb%bd%e6%ba%90%e7%a0%81%e5%a4%84%e5%a4%84%e7%bc%96%e8%af%91&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;JAVA以跨平台著称，号称&amp;quot;一次编译，处处运行&amp;quot;。实际上，每台机器，都必须安装JAVA虚拟机能运行。
+所以，从跨平台的表现上看，JAVA对比普通脚本语言并无太大优势。&lt;/p&gt;
+&lt;p&gt;Go和C一样，一份源码，在任意操作系统上，直接编译成二进制可执行文件，便可在其他机器上独立运行。（指运行环境和编译环境一致。如: 在win-x64系统上编译，在win-x64系统上运行）&lt;/p&gt;
+&lt;h2 id=&#34;环境安装&#34;&gt;环境安装 &lt;a href=&#34;#%e7%8e%af%e5%a2%83%e5%ae%89%e8%a3%85&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Go安装包下载链接，请以官方显示的不同操作系统平台的Go最新版本链接为准: &lt;a href=&#34;https://go.dev/dl/&#34;&gt;https://go.dev/dl/&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;linux&#34;&gt;Linux &lt;a href=&#34;#linux&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;下载Go文件压缩包并解压，设置Go环境变量&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 下载go环境压缩包，链接可自行替换为最新版本
+wget -c https://go.dev/dl/go1.19.3.linux-amd64.tar.gz
+# 解压缩到/usr/local目录
+tar -C /usr/local -xzf go1.19.3.linux-amd64.tar.gz
+# 添加go可执行文件所在的目录到环境变量。
+# 可在系统初始化文件 /etc/profile 的最末行添加代码: export PATH=$PATH:/usr/local/go/bin
+vim /etc/profile
+# 手动执行初始化文件，使得环境变量更改生效
+source /etc/profile
+# 验证go是否安装成功。
+go version
+&lt;/code&gt;&lt;/pre&gt;&lt;h3 id=&#34;mac&#34;&gt;Mac &lt;a href=&#34;#mac&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;同Linux&lt;/p&gt;
+&lt;h3 id=&#34;windows&#34;&gt;Windows &lt;a href=&#34;#windows&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;下载Go环境安装文件，安装结束后，安装程序自动设置Go环境变量&lt;/p&gt;
+&lt;p&gt;下载并安装文件: &lt;a href=&#34;https://go.dev/dl/go1.19.3.windows-amd64.msi&#34;&gt;https://go.dev/dl/go1.19.3.windows-amd64.msi&lt;/a&gt;
+打开cmd命令窗口验证go命令: &lt;code&gt;go version&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;环境设置&#34;&gt;环境设置 &lt;a href=&#34;#%e7%8e%af%e5%a2%83%e8%ae%be%e7%bd%ae&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;查看所有go环境设置项的值: &lt;code&gt;go env&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;输入如下命令，更改默认设置项以方便后续开发:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 开启GO111MODULE，方便第三方包的导入
+go env -w GO111MODULE=on
+# 使用国内Go模块代理，加速第三方包导入速度
+go env -w GOPROXY=https://goproxy.cn,direct
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;项目创建&#34;&gt;项目创建 &lt;a href=&#34;#%e9%a1%b9%e7%9b%ae%e5%88%9b%e5%bb%ba&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在新目录初始化本地项目(&lt;code&gt;myproject&lt;/code&gt;)，生成 &lt;code&gt;go.mod&lt;/code&gt; 文件: &lt;code&gt;go mod init myproject&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;新建 &lt;code&gt;main.go&lt;/code&gt; 入口文件，通过 &lt;code&gt;import&lt;/code&gt; 语法导入包，在 &lt;code&gt;func main()&lt;/code&gt; 入口函数中编写代码&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;更新依赖，生成 &lt;code&gt;go.sum&lt;/code&gt; 文件: &lt;code&gt;go mod tidy&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;调试运行: &lt;code&gt;go run .&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编译成二进制可执行文件(&lt;code&gt;myproject.exe&lt;/code&gt;): &lt;code&gt;go build .&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;code&gt;main.go&lt;/code&gt; 文件示例（提取百度首页热搜）:&lt;/p&gt;
+&lt;p&gt;最新源码: &lt;a href=&#34;https://github.com/iotames/miniutils/tree/main/examples/myproject&#34;&gt;https://github.com/iotames/miniutils/tree/main/examples/myproject&lt;/a&gt;&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;package main
+
+import (
+	&amp;#34;fmt&amp;#34;
+	&amp;#34;log&amp;#34;
+
+	&amp;#34;github.com/iotames/miniutils&amp;#34;
+)
+
+func main() {
+	// 构建HTTP请求(默认GET方法)
+	req := miniutils.NewHttpRequest(&amp;#34;https://www.baidu.com&amp;#34;)
+	// 设置HTTP请求头
+	req.SetRequestHeader(&amp;#34;user-agent&amp;#34;, &amp;#34;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.81 Safari/533.33&amp;#34;)
+	// 执行HTTP请求
+	err := req.Do(nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	body := string(req.BodyBytes)
+        // 提取网页中，以`&amp;lt;span class=&amp;#34;title-content-title&amp;#34;&amp;gt;`字符串开头，`&amp;lt;/span&amp;gt;` 字符串结尾的所有字符串片段。
+	strfind := miniutils.NewStrfind(body).SetRegexpBeginEnd(`&amp;lt;span class=&amp;#34;title-content-title&amp;#34;&amp;gt;`, `&amp;lt;/span&amp;gt;`)
+	hots := strfind.DoFind().GetAll(false)
+	hotsMsg := &amp;#34;百度热搜:\n&amp;#34;
+	for i, v := range hots {
+		hotsMsg += fmt.Sprintf(&amp;#34;[%d]-----&amp;gt;[%s]\n&amp;#34;, i, v)
+	}
+	log.Println(hotsMsg)
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;运行结果:&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;
+----RequestBegin---GET: https://www.baidu.com -------------------------------------------
+
+User-Agent:  [Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.81 Safari/533.33]
+
+
+----RequestEnd---(200 OK)----------------------
+
+2022/11/18 14:59:21 百度热搜:
+[0]-----&amp;gt;[“两个全球倡议”有何含义]
+[2]-----&amp;gt;[携手应对挑战 加快经济复苏]
+[2]-----&amp;gt;[新华社：一封了之、一放了之要不得]
+[3]-----&amp;gt;[张伯礼：奥密克戎难以彻底消灭]
+[4]-----&amp;gt;[31省份昨日新增本土2276+22853]
+[5]-----&amp;gt;[女子戴隐形10年角膜长满新生血管]
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;至此，一个简单的 Hello Word 应用程序编写完成, 用于提取百度首页的热搜关键词.
+程序编译成独立的可执行文件: &lt;code&gt;myproject.exe&lt;/code&gt;(Linux或Mac系统文件名为&lt;code&gt;myproject&lt;/code&gt;).
+请打开命令行窗口执行:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Windows: &lt;code&gt;myproject.exe&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Linux: &lt;code&gt;./myproject&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Linux系统若报权限问题，请先赋予文件可执行权限: &lt;code&gt;chmod +x myproject&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&#34;语法特性&#34;&gt;语法特性 &lt;a href=&#34;#%e8%af%ad%e6%b3%95%e7%89%b9%e6%80%a7&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;h3 id=&#34;package-包&#34;&gt;package 包 &lt;a href=&#34;#package-%e5%8c%85&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;Go语言使用包(package)来组织golang工程项目。特点如下:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;一个包一个文件夹，包名通常为&lt;code&gt;小写英文字母&lt;/code&gt;，建议和目录名相同。&lt;/li&gt;
+&lt;li&gt;包目录下每个go文件首行内容为: &lt;code&gt;package [包名]&lt;/code&gt;。如 &lt;code&gt;package main&lt;/code&gt;, &lt;code&gt;package model&lt;/code&gt;, &lt;code&gt;package service&lt;/code&gt;, &lt;code&gt;package webserver&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;一个包的函数和变量是共享的，可直接调用。但要被其他包调用，函数名或变量的&lt;code&gt;首字母必须大写&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;可编译项目的根目录，必须为main包，且必须存在 &lt;code&gt;func main()&lt;/code&gt; 函数作为应用入口。(若项目作为第三方库使用，则无man包和main函数)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;包声明&lt;/code&gt;: 在go源码&lt;code&gt;文件首行&lt;/code&gt;，使用 &lt;code&gt;package&lt;/code&gt; 语句。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;包导入&lt;/code&gt;: 在&lt;code&gt;包声明&lt;/code&gt;语句下面，使用 &lt;code&gt;import&lt;/code&gt; 语法导入，使用 &lt;code&gt;/&lt;/code&gt; 符号连接不同文件夹的包名。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;ul&gt;
+&lt;li&gt;golang官方包: &lt;code&gt;fmt&lt;/code&gt;, &lt;code&gt;runtime&lt;/code&gt;, &lt;code&gt;encoding/json&lt;/code&gt;, &lt;code&gt;net/http&lt;/code&gt;, &lt;code&gt;golang.org/x/net/html&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;本地包: &lt;code&gt;包导入&lt;/code&gt;格式&lt;code&gt;本地项目名/本地包名&lt;/code&gt;，如 &lt;code&gt;myproject/model&lt;/code&gt;, &lt;code&gt;myproject/webserver/data&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;第三方包: &lt;code&gt;github.com/iotames/miniutils&lt;/code&gt;, &lt;code&gt;xorm.io/xorm&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;循环语句&#34;&gt;循环语句 &lt;a href=&#34;#%e5%be%aa%e7%8e%af%e8%af%ad%e5%8f%a5&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h3&gt;&lt;p&gt;&lt;code&gt;Go基础语法&lt;/code&gt; 在线练习: &lt;a href=&#34;https://go.dev/play/&#34;&gt;https://go.dev/play/&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for语句&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;result := &amp;#34;&amp;#34;
+for i := &amp;#39;a&amp;#39;; i &amp;lt;= &amp;#39;g&amp;#39;; i++ {
+    result += fmt.Sprintf(&amp;#34;%c&amp;#34;, i)
+}
+fmt.Println(result) // 输出 &amp;#34;abcdefg&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;result := &amp;#34;&amp;#34;
+for i := 0; i &amp;lt;= 5; i++ {
+    result += fmt.Sprintf(&amp;#34;%d&amp;#34;, i)
+}
+fmt.Println(result) // 输出 &amp;#34;012345&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;ul&gt;
+&lt;li&gt;for range 语句&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;mapstr := map[string]string{&amp;#34;a&amp;#34;:&amp;#34;aa11&amp;#34;, &amp;#34;b&amp;#34;:&amp;#34;bb22&amp;#34;}
+result := &amp;#34;&amp;#34;
+for k, v := range mapstr {
+    result += fmt.Sprintf(&amp;#34;%s-&amp;gt;%s&amp;#34;, k, v)
+}
+fmt.Println(result) // 输出 &amp;#34;a-&amp;gt;aa11b-&amp;gt;bb22&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sliceStr:= []string{&amp;#34;aa11&amp;#34;, &amp;#34;bb22&amp;#34;}
+result := &amp;#34;&amp;#34;
+for i, v := range sliceStr {
+    result += fmt.Sprintf(&amp;#34;%d-&amp;gt;%s&amp;#34;, i, v)
+}
+fmt.Println(result) // 输出 &amp;#34;0-&amp;gt;aa111-&amp;gt;bb22&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;教程源码&#34;&gt;教程源码 &lt;a href=&#34;#%e6%95%99%e7%a8%8b%e6%ba%90%e7%a0%81&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;本教程调用库 &lt;code&gt;miniutils&lt;/code&gt;，对日常开发的常见功能进行封装，不依赖其他第三方库，包含 examples 示例源码。&lt;/p&gt;
+&lt;p&gt;同步仓库:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Github: &lt;a href=&#34;https://github.com/iotames/miniutils&#34;&gt;https://github.com/iotames/miniutils&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Gitee: &lt;a href=&#34;https://gitee.com/catmes/miniutils&#34;&gt;https://gitee.com/catmes/miniutils&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;安装go开发环境: &lt;a href=&#34;https://go.dev/doc/install&#34;&gt;https://go.dev/doc/install&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>使用Hugo创建Github Pages博客</title>
+      <link>/posts/hugo-blog/</link>
+      <pubDate>Sat, 19 Nov 2022 10:22:17 +0800</pubDate>
+      
+      <guid>/posts/hugo-blog/</guid>
+      <description>&lt;h2 id=&#34;创建git仓库&#34;&gt;创建Git仓库 &lt;a href=&#34;#%e5%88%9b%e5%bb%bagit%e4%bb%93%e5%ba%93&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;Github上创建仓库，仓库名为 &lt;code&gt;username.github.io&lt;/code&gt;, 其中 &lt;code&gt;username&lt;/code&gt; 必须为实际GitHub账号的用户名。&lt;/p&gt;
+&lt;h2 id=&#34;安装hugo&#34;&gt;安装hugo &lt;a href=&#34;#%e5%ae%89%e8%a3%85hugo&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;很多主题需要 &lt;code&gt;扩展版&lt;/code&gt; 的hugo才能安装。故应安装 &lt;code&gt;扩展版的hugo&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;安装方法有二: 1. 直接下载 Releases 发布包. 2. 通过 go install 命令安装&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;下载hugo发布包(文件名含extended): &lt;a href=&#34;https://github.com/gohugoio/hugo/releases&#34;&gt;https://github.com/gohugoio/hugo/releases&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Go 安装: &lt;code&gt;go env -w CGO_ENABLED=1&lt;/code&gt;, &lt;code&gt;go install --tags extended github.com/gohugoio/hugo@latest&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;验证安装:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;hugo version
+hugo v0.106.0-e08ce30fe4779e7d8a8395d7021314b915648cb4+extended windows/amd64 BuildDate=2022-11-17T18:33:40Z VendorInfo=gohugoio
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id=&#34;创建博客&#34;&gt;创建博客 &lt;a href=&#34;#%e5%88%9b%e5%bb%ba%e5%8d%9a%e5%ae%a2&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# 1. Create a New Site
+hugo new site quickstart
+# 2. Add a Theme
+cd quickstart
+git init
+git submodule add https://github.com/leafee98/hugo-theme-flat themes/hugo-theme-flat
+echo theme = \&amp;#34;hugo-theme-flat\&amp;#34; &amp;gt;&amp;gt; config.toml
+# 3. Add Some Content
+hugo new posts/my-first-post.md
+# 4. Start the Hugo server
+hugo server -D
+# 5. Site Configuration
+vim config.toml
+# 6. Build static pages
+hugo -D
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;配置&#34;&gt;配置 &lt;a href=&#34;#%e9%85%8d%e7%bd%ae&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# config.toml
+title = &amp;#34;我的博客&amp;#34;
+theme=&amp;#34;hugo-theme-flat&amp;#34;
+[taxonomies]
+  tag = &amp;#34;tags&amp;#34;
+  series = &amp;#34;series&amp;#34;
+  category = &amp;#34;categories&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;每个post的头部也相应增加对应的分类&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;date: &amp;#34;2018-01-09T16:22:25+08:00&amp;#34;
+draft: false
+title: &amp;#34;Blog养成记(4) 增加tags等分类&amp;#34;
+tags: [&amp;#34;hugo&amp;#34;]
+series: [&amp;#34;Blog养成记&amp;#34;]
+categories: [&amp;#34;杂技浅尝&amp;#34;]
+&lt;/code&gt;&lt;/pre&gt;&lt;h2 id=&#34;module主题&#34;&gt;module主题 &lt;a href=&#34;#module%e4%b8%bb%e9%a2%98&#34; class=&#34;anchor&#34;&gt;🔗&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;有些主题为 &lt;a href=&#34;https://gohugo.io/hugo-modules/&#34;&gt;Hugo module&lt;/a&gt;，必须额外配置:
+在项目跟目录运行: &lt;code&gt;hugo mod init 项目名(博客名)&lt;/code&gt;
+在配置文件 &lt;code&gt;config.toml&lt;/code&gt; 添加模块配置项&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;# config.toml
+[[module.imports]]
+path = &amp;#34;github.com/CaiJimmy/hugo-theme-stack/v3&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://stack.jimmycai.com/guide/getting-started&#34;&gt;https://stack.jimmycai.com/guide/getting-started&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://pages.github.com/&#34;&gt;https://pages.github.com/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;a href=&#34;https://gohugo.io/getting-started/quick-start/&#34;&gt;https://gohugo.io/getting-started/quick-start/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hugo Config &lt;a href=&#34;https://ithelp.ithome.com.tw/articles/10241051&#34;&gt;https://ithelp.ithome.com.tw/articles/10241051&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Hugo配置分类 &lt;a href=&#34;https://orianna-zzo.github.io/sci-tech/2018-01/blog%E5%85%BB%E6%88%90%E8%AE%B04-hugo%E4%B8%AD%E5%A2%9E%E5%8A%A0tags%E7%AD%89%E5%88%86%E7%B1%BB/&#34;&gt;https://orianna-zzo.github.io/sci-tech/2018-01/blog%E5%85%BB%E6%88%90%E8%AE%B04-hugo%E4%B8%AD%E5%A2%9E%E5%8A%A0tags%E7%AD%89%E5%88%86%E7%B1%BB/&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
