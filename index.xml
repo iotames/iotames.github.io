@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>WuHanqing的博客</title>
+    <link>https://iotames.github.io/</link>
+    <description>Recent content on WuHanqing的博客</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <copyright>Copyright © 2016-2023 wuhanqing.
+</copyright>
+    <lastBuildDate>Wed, 15 Feb 2023 15:41:56 +0800</lastBuildDate><atom:link href="https://iotames.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang语言共享内存变量方法总结</title>
+      <link>https://iotames.github.io/posts/go-share-var/</link>
+      <pubDate>Wed, 15 Feb 2023 15:41:56 +0800</pubDate>
+      
+      <guid>https://iotames.github.io/posts/go-share-var/</guid>
+      <description><![CDATA[<p>程序并发运行时，如果多个线程同时对内存变量，进行读取和修改，可能导致错误的处理结果。
+Go语言中，如果无法确定两个 goroutine 中代码的执行顺序。就可以说这两个 goroutine 是并发执行的。</p>]]></description>
+    </item>
+    
+    <item>
+      <title>Go语言快速入门指南</title>
+      <link>https://iotames.github.io/posts/quick-golang/</link>
+      <pubDate>Sat, 19 Nov 2022 16:58:02 +0800</pubDate>
+      
+      <guid>https://iotames.github.io/posts/quick-golang/</guid>
+      <description><![CDATA[简介 本文旨在为Go语言初学者提供快速入门指南，从环境安装和设置，到项目编译打包，学会Go开发的流程。 Go语言继承C语言的理念，语法类似，奉行]]></description>
+    </item>
+    
+    <item>
+      <title>使用Hugo创建Github Pages博客</title>
+      <link>https://iotames.github.io/posts/hugo-blog/</link>
+      <pubDate>Sat, 19 Nov 2022 10:22:17 +0800</pubDate>
+      
+      <guid>https://iotames.github.io/posts/hugo-blog/</guid>
+      <description><![CDATA[创建Git仓库 Github上创建仓库，仓库名为 username.github.io, 其中 username 必须为实际GitHub账号的用户名。 安装hugo 很多主题需要 扩展版 的hugo才能安装。]]></description>
+    </item>
+    
+  </channel>
+</rss>
+
